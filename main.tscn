@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=3 uid="uid://ceemycfa02rur"]
+
+[ext_resource type="PackedScene" uid="uid://cp0xjici63862" path="res://Shovel.glb" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://cqbe1vlruelnq" path="res://shovel.gd" id="2_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_h2yge"]
+sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
+
+[sub_resource type="Environment" id="Environment_1bvp3"]
+background_mode = 2
+sky = SubResource("Sky_h2yge")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dm0k"]
+albedo_color = Color(0.952941, 0.92549, 0.654902, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ig7tw"]
+material = SubResource("StandardMaterial3D_7dm0k")
+size = Vector2(10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(10, 0.578247, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0.922914, 0.880161, 0.487371, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_h2yge"]
+material = SubResource("StandardMaterial3D_0xm2m")
+inner_radius = 0.065
+outer_radius = 0.128
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+albedo_color = Color(0.149445, 0.136513, 0.0208734, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lquwl"]
+material = SubResource("StandardMaterial3D_1bvp3")
+size = Vector2(0.15, 0.15)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bvp3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Shovel" parent="." instance=ExtResource("1_0xm2m")]
+transform = Transform3D(0.0869333, -0.0232937, 0, 0.0232937, 0.0869333, 0, 0, 0, 0.09, 0.219736, 0.0724389, -0.0240453)
+script = ExtResource("2_h2yge")
+
+[node name="Sand" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sand"]
+transform = Transform3D(1.01218, 0, 0, 0, 1.01218, 0, 0, 0, 1.01218, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.210876, 0)
+shape = SubResource("BoxShape3D_0xm2m")
+debug_fill = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 1, 1)
+
+[node name="Hole" type="StaticBody3D" parent="."]
+
+[node name="SandRingMesh" type="MeshInstance3D" parent="Hole"]
+mesh = SubResource("TorusMesh_h2yge")
+
+[node name="HoleMesh" type="MeshInstance3D" parent="Hole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
+mesh = SubResource("PlaneMesh_lquwl")
