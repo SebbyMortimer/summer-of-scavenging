@@ -1,0 +1,142 @@
+[gd_scene load_steps=20 format=3 uid="uid://ceemycfa02rur"]
+
+[ext_resource type="PackedScene" uid="uid://m2sg0h134f1g" path="res://scenes/objects/shovel.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dxaevytkj4sln" path="res://scripts/ui_main.gd" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://tc3xf6qaxj0c" path="res://textures/Water.png" id="2_tbgi4"]
+[ext_resource type="Script" uid="uid://c0sjbwq5tcwmi" path="res://scripts/water.gd" id="2_tefeu"]
+[ext_resource type="AudioStream" uid="uid://bysuymgscd2wh" path="res://audio/mainmenu.wav" id="3_sugp2"]
+[ext_resource type="AudioStream" uid="uid://cs076v4ectr8x" path="res://audio/bgmusic.ogg" id="4_jyhfs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_h2yge"]
+sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
+
+[sub_resource type="Environment" id="Environment_1bvp3"]
+background_mode = 2
+sky = SubResource("Sky_h2yge")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+albedo_color = Color(0.953, 0.925, 0.655, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ig7tw"]
+material = SubResource("StandardMaterial3D_jyhfs")
+size = Vector2(10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(10, 0.578247, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
+albedo_color = Color(0.905882, 0.901961, 1, 1)
+albedo_texture = ExtResource("2_tbgi4")
+uv1_scale = Vector3(1000, 1000, 1000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tipki"]
+material = SubResource("StandardMaterial3D_o6xl0")
+size = Vector2(1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+albedo_color = Color(0.922914, 0.880161, 0.487371, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_h2yge"]
+material = SubResource("StandardMaterial3D_ig7tw")
+inner_radius = 0.065
+outer_radius = 0.128
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0.149445, 0.136513, 0.0208734, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lquwl"]
+material = SubResource("StandardMaterial3D_0xm2m")
+size = Vector2(0.15, 0.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bvp3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.02
+
+[node name="Shovel" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(0.0869333, -0.0232937, 0, 0.0232937, 0.0869333, 0, 0, 0, 0.09, 0.219736, 0.0724389, -0.0240453)
+
+[node name="Sand" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sand"]
+transform = Transform3D(1.01218, 0, 0, 0, 1.01218, 0, 0, 0, 1.01218, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.210876, 0)
+shape = SubResource("BoxShape3D_0xm2m")
+debug_fill = false
+
+[node name="Water" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+script = ExtResource("2_tefeu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
+mesh = SubResource("PlaneMesh_tipki")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 1, 1)
+
+[node name="Hole" type="StaticBody3D" parent="."]
+visible = false
+
+[node name="SandRingMesh" type="MeshInstance3D" parent="Hole"]
+mesh = SubResource("TorusMesh_h2yge")
+
+[node name="HoleMesh" type="MeshInstance3D" parent="Hole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
+mesh = SubResource("PlaneMesh_lquwl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0426283, 0, 0.870657)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1.34469, 0, 0, 0, 0.666727, 0, 0, 0, 1.4452, -1.76167, -0.184599, 0)
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(-1.12956e-08, 0, -0.258412, 0, 0.258412, 0, 0.258412, 0, -1.12956e-08, -0.0426282, 0.284535, -0.0755829)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1.34469, 0, 0, 0, 0.666727, 0, 0, 0, 1.4452, -1.76167, -0.184599, 0)
+mesh = SubResource("BoxMesh_ig7tw")
+skeleton = NodePath("../../StaticBody3D2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_0wfyh")
+
+[node name="BackgroundAudio" type="AudioStreamPlayer" parent="CanvasLayer"]
+stream = ExtResource("4_jyhfs")
+
+[node name="MainMenuContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -284.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenuContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "PLAY"
+
+[node name="MainMenuAudio" type="AudioStreamPlayer" parent="CanvasLayer/MainMenuContainer"]
+stream = ExtResource("3_sugp2")
+
+[connection signal="pressed" from="CanvasLayer/MainMenuContainer/PlayButton" to="CanvasLayer" method="_on_play_button_pressed"]

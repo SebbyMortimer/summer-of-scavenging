@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cp0xjici63862"
-path="res://.godot/imported/Shovel.glb-94def5538b06e3a8561a31b4d2c42aad.scn"
+path="res://.godot/imported/Shovel.glb-10f0732fa83b2dbb82752281ac002269.scn"
 
 [deps]
 
-source_file="res://Shovel.glb"
-dest_files=["res://.godot/imported/Shovel.glb-94def5538b06e3a8561a31b4d2c42aad.scn"]
+source_file="res://models/Shovel.glb"
+dest_files=["res://.godot/imported/Shovel.glb-10f0732fa83b2dbb82752281ac002269.scn"]
 
 [params]
 
