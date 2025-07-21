@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ceemycfa02rur"]
+[gd_scene load_steps=22 format=3 uid="uid://ceemycfa02rur"]
 
 [ext_resource type="PackedScene" uid="uid://m2sg0h134f1g" path="res://scenes/objects/shovel.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dxaevytkj4sln" path="res://scripts/ui_main.gd" id="2_0wfyh"]
@@ -54,7 +54,13 @@ albedo_color = Color(0.149445, 0.136513, 0.0208734, 1)
 material = SubResource("StandardMaterial3D_0xm2m")
 size = Vector2(0.15, 0.15)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tefeu"]
+albedo_color = Color(0.582654, 0.315294, 9.62615e-08, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+material = SubResource("StandardMaterial3D_tefeu")
+
+[sub_resource type="BoxMesh" id="BoxMesh_o6xl0"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -80,40 +86,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.210876, 0)
 shape = SubResource("BoxShape3D_0xm2m")
 debug_fill = false
 
-[node name="Water" type="StaticBody3D" parent="."]
+[node name="Water" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
-script = ExtResource("2_tefeu")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
 mesh = SubResource("PlaneMesh_tipki")
+skeleton = NodePath("")
+script = ExtResource("2_tefeu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 1, 1)
 
-[node name="Hole" type="StaticBody3D" parent="."]
+[node name="Hole" type="Node3D" parent="."]
 visible = false
 
 [node name="SandRingMesh" type="MeshInstance3D" parent="Hole"]
 mesh = SubResource("TorusMesh_h2yge")
+skeleton = NodePath("")
 
 [node name="HoleMesh" type="MeshInstance3D" parent="Hole"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
 mesh = SubResource("PlaneMesh_lquwl")
+skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0426283, 0, 0.870657)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1.34469, 0, 0, 0, 0.666727, 0, 0, 0, 1.4452, -1.76167, -0.184599, 0)
+[node name="Boardwalk" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.87783e-08, 0, -1.4452, 0, 0.666727, 0, 1.34469, 0, -6.31717e-08, -0.0426282, -0.184599, -0.891013)
 mesh = SubResource("BoxMesh_ig7tw")
+skeleton = NodePath("")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(-1.12956e-08, 0, -0.258412, 0, 0.258412, 0, 0.258412, 0, -1.12956e-08, -0.0426282, 0.284535, -0.0755829)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-transform = Transform3D(1.34469, 0, 0, 0, 0.666727, 0, 0, 0, 1.4452, -1.76167, -0.184599, 0)
-mesh = SubResource("BoxMesh_ig7tw")
-skeleton = NodePath("../../StaticBody3D2")
+[node name="Boombox" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.51891e-08, 0, -0.373457, 0, 0.17229, 0, 0.347484, 0, -1.63244e-08, -0.0426282, 0.236832, -0.53082)
+mesh = SubResource("BoxMesh_o6xl0")
+skeleton = NodePath("")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("2_0wfyh")
