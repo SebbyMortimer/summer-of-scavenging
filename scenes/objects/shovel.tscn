@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m2sg0h134f1g"]
+[gd_scene load_steps=11 format=3 uid="uid://m2sg0h134f1g"]
 
 [ext_resource type="PackedScene" uid="uid://cp0xjici63862" path="res://models/Shovel.glb" id="1_s66sy"]
 [ext_resource type="Script" uid="uid://cqbe1vlruelnq" path="res://scripts/shovel.gd" id="2_s6a64"]
@@ -130,6 +130,8 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_s6a64")
 size = Vector2(0.025, 0.025)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wy1wa"]
+
 [node name="Shovel" instance=ExtResource("1_s66sy")]
 transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0, 0, 0)
 script = ExtResource("2_s6a64")
@@ -152,3 +154,10 @@ lifetime = 0.25
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_s66sy")
 draw_pass_1 = SubResource("QuadMesh_ixogv")
+
+[node name="ShovelArea" type="Area3D" parent="." index="4"]
+transform = Transform3D(1, -1.09801e-07, 0, 1.09801e-07, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShovelArea" index="0"]
+shape = SubResource("CylinderShape3D_wy1wa")
+debug_fill = false

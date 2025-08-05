@@ -1,0 +1,113 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhmemtk3ny127"]
+
+[ext_resource type="PackedScene" uid="uid://drtnj35tp4ccg" path="res://models/chest.glb" id="1_cx80o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
+albedo_color = Color(0.922914, 0.880161, 0.487371, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_h2yge"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ig7tw")
+inner_radius = 0.065
+outer_radius = 0.128
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0.149445, 0.136513, 0.0208734, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lquwl"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_0xm2m")
+size = Vector2(0.15, 0.15)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_85g3d"]
+height = 0.1
+radius = 0.1
+
+[sub_resource type="Animation" id="Animation_lhvvt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("chest:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.526401, -1.36602, 0.391978)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("chest:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.0726926]
+}
+
+[sub_resource type="Animation" id="Animation_cx80o"]
+resource_name = "chest_rise"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("chest:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.033, 0.227307]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("chest:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.526401, -1.36602, 0.391978), Vector3(0, -1.5708, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jd7o4"]
+_data = {
+&"RESET": SubResource("Animation_lhvvt"),
+&"chest_rise": SubResource("Animation_cx80o")
+}
+
+[node name="Hole" type="Node3D"]
+
+[node name="SandRingMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_h2yge")
+skeleton = NodePath("")
+
+[node name="HoleMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
+mesh = SubResource("PlaneMesh_lquwl")
+skeleton = NodePath("")
+
+[node name="chest" parent="." instance=ExtResource("1_cx80o")]
+transform = Transform3D(3.05474e-08, -0.026615, -0.0423278, 0.016515, 0.0399522, -0.0251213, 0.0471938, -0.0139809, 0.00879096, -0.016, -0.0726926, 0.015)
+visible = false
+
+[node name="HoleArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HoleArea"]
+shape = SubResource("CylinderShape3D_85g3d")
+debug_fill = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jd7o4")
+}

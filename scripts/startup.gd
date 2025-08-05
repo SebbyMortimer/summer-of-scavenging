@@ -10,4 +10,5 @@ func _ready() -> void:
 	tween = get_tree().create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 2.0)
 	await tween.finished
+	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
