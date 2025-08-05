@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://ceemycfa02rur"]
+[gd_scene load_steps=45 format=4 uid="uid://ceemycfa02rur"]
 
 [ext_resource type="PackedScene" uid="uid://m2sg0h134f1g" path="res://scenes/objects/shovel.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dxaevytkj4sln" path="res://scripts/ui_main.gd" id="2_0wfyh"]
@@ -20,6 +20,7 @@
 [ext_resource type="StyleBox" uid="uid://b37few20ncgu" path="res://button_pressed.tres" id="14_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://bi7n2y5ddqho" path="res://models/beachchair.glb" id="15_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://xr2mxaei6rk4" path="res://audio/count.wav" id="16_gqmmt"]
+[ext_resource type="Texture2D" uid="uid://bmsx4av2v16m6" path="res://textures/coin.png" id="16_yc10j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -171,6 +172,7 @@ environment = SubResource("Environment_1bvp3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 0.25
 shadow_enabled = true
 shadow_bias = 0.02
 
@@ -387,16 +389,32 @@ texture = ExtResource("12_jbj1t")
 expand_mode = 1
 
 [node name="AddedCoinsLabel" type="Label" parent="CanvasLayer/TreasurePopup/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/shadow_outline_size = 10
 theme_override_font_sizes/font_size = 100
-text = "+🪙100"
-horizontal_alignment = 1
+text = "+100"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/TreasurePopup/MarginContainer/VBoxContainer/MarginContainer/AddedCoinsLabel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("16_yc10j")
+expand_mode = 1
 
 [node name="TreasureButton" type="Button" parent="CanvasLayer/TreasurePopup/MarginContainer/VBoxContainer"]
 process_mode = 3
@@ -496,10 +514,10 @@ visible = false
 offset_right = 224.0
 offset_bottom = 137.0
 
-[node name="CoinEmoji" type="Label" parent="CanvasLayer/GoldCoinsContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GoldCoinsContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
-text = " 🪙"
+texture = ExtResource("16_yc10j")
+expand_mode = 3
 
 [node name="GoldCoinsLabel" type="Label" parent="CanvasLayer/GoldCoinsContainer"]
 layout_mode = 2
